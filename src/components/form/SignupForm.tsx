@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Checkbox, FormControlLabel } from '@mui/material';
+import { TextField, Button, Box, Typography } from '@mui/material';
 
 interface SignupFormProps {
-  onSubmit: (name: string, email: string, password: string, isAdmin: boolean) => void;
-  allowAdminSignup: boolean;
+  onSubmit: (name: string, email: string, password: string) => void;
 }
 
-export const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, allowAdminSignup }) => {
+export const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(name, email, password, isAdmin);
+    onSubmit(name, email, password);
   };
 
   return (
@@ -57,12 +55,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, allowAdminSign
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      {allowAdminSignup && (
-        <FormControlLabel
-          control={<Checkbox checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />}
-          label="Зарегистрироваться как администратор"
-        />
-      )}
       <Button
         type="submit"
         fullWidth

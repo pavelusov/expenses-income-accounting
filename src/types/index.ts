@@ -1,37 +1,5 @@
 import 'next-auth';
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  isAdmin: boolean;
-}
-
-export interface Survey {
-  id: string;
-  title: string;
-  questions: Question[];
-}
-
-export interface Question {
-  id: string;
-  text: string;
-  type: 'text' | 'multipleChoice' | 'radio';
-  options?: string[];
-}
-
-export interface Response {
-  id: string;
-  userId: string;
-  surveyId: string;
-  answers: Answer[];
-}
-
-export interface Answer {
-  questionId: string;
-  value: string;
-}
-
 declare module 'next-auth' {
   interface Session {
     user: User;
@@ -40,6 +8,32 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    isAdmin: boolean;
+    id: string;
   }
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface Transaction {
+  id: string;
+  userId: string;
+  amount: number;
+  type: 'income' | 'expense';
+  category: string;
+  description?: string;
+  date: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  type: 'income' | 'expense';
+  createdAt: Date;
+  updatedAt: Date;
 }

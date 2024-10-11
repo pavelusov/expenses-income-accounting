@@ -9,12 +9,12 @@ import { signIn } from 'next-auth/react';
 export default function SignupPage() {
   const router = useRouter();
 
-  const handleSignup = async (name: string, email: string, password: string, isAdmin: boolean) => {
+  const handleSignup = async (name: string, email: string, password: string) => {
     try {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, isAdmin }),
+        body: JSON.stringify({ name, email, password }),
       });
       if (response.ok) {
         // После успешной регистрации, выполняем вход
@@ -27,7 +27,7 @@ export default function SignupPage() {
         if (result?.error) {
           console.error('Login after signup failed:', result.error);
         } else {
-          router.push('/dashboard');
+          router.push('/');
         }
       } else {
         console.error('Signup failed');
@@ -39,7 +39,7 @@ export default function SignupPage() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <SignupForm onSubmit={handleSignup} allowAdminSignup={true} />
+      <SignupForm onSubmit={handleSignup} />
     </Container>
   );
 }
